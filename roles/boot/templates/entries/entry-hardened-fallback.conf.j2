@@ -5,4 +5,4 @@ linux /vmlinuz-linux-hardened
 initrd /intel-ucode.img
 {% endif %}
 initrd /initramfs-linux-hardened-fallback.img
-options rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:{{ hostname }}:allow-discards
+options rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:cryptlvm:allow-discards
