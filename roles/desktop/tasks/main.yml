@@ -4,10 +4,11 @@
     name: "{{ packages.desktop }}"
     state: present
 
-    #- name: Install desktop packages (AUR)
-    #  aur:
-    #    name: "{{ packages.desktop-aur }}"
-    #    state: present
+- name: Install desktop packages (AUR)
+  aur:
+    name: "{{ item }}"
+    user: "{{ user.name }}"
+  with_items: "{{ packages.desktop_aur }}"
 
 - name: Install fonts
   pacman:

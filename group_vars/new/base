@@ -69,7 +69,7 @@ packages:
   - noto-fonts-cjk
   - terminus-font
 
-  desktop-aur:
+  desktop_aur:
   - ibus-mozc
 
   apps:
