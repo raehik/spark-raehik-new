@@ -1,3 +1,5 @@
 ---
+- name: reload systemd config
+  command: systemctl daemon-reload
 - name: restart paccache
   service: name=paccache.timer state=restarted

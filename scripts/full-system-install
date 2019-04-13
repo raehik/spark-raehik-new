@@ -37,5 +37,5 @@ mount /dev/$hostname/home /mnt/home
 pacstrap /mnt base $base_pkgs
 genfstab -t PARTLABEL /mnt >> /mnt/etc/fstab
 echo "HOOKS=(base udev keyboard autodetect filesystems fsck block modconf keymap encrypt lvm2 resume)" >> /mnt/etc/mkinitcpio.conf
-cp -r "$(pwd)"/.. /mnt/root
-arch-chroot /mnt /mnt/root/$proj_dir/run
+cp -r "$(pwd)"/.. /mnt/root/$proj_dir
+arch-chroot /mnt /root/$proj_dir/run
