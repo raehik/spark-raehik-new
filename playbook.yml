@@ -9,6 +9,7 @@
   - audio
   - video
   - desktop
+  - steam
   vars_prompt:
   - name: user_password
     prompt: Enter desired user password

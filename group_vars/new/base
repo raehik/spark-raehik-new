@@ -64,6 +64,8 @@ packages:
   - pasystray
   - termite
   - firefox
+  - sxiv
+  - mpv
 
   fonts:
   - noto-fonts

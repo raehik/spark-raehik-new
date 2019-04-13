@@ -1,0 +1,10 @@
+---
+- name: Install Steam
+  pacman:
+    name: steam
+    state: present
+
+- name: Install Steam font (UI looks bad without)
+  pacman:
+    name: ttf-liberation
+    state: present
