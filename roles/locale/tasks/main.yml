@@ -8,3 +8,8 @@
   template:
     src: locale.conf.j2
     dest: /etc/locale.conf
+
+- name: Set console keymap
+  template:
+    src: vconsole.conf.j2
+    dest: /etc/vconsole.conf
