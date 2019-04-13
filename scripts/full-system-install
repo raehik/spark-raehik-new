@@ -39,3 +39,11 @@ genfstab -t PARTLABEL /mnt >> /mnt/etc/fstab
 echo "HOOKS=(base udev keyboard autodetect filesystems fsck block modconf keymap encrypt lvm2 resume)" >> /mnt/etc/mkinitcpio.conf
 cp -r "$(pwd)"/.. /mnt/root/$proj_dir
 arch-chroot /mnt /root/$proj_dir/run
+arch-chroot /mnt mkinitcpio -p linux
+
+umount /dev/$hostname/home
+umount /dev/$hostname/boot
+umount /dev/$hostname/root
+swapoff /dev/$hostname/swap
+vgchange -an $hostname
+cryptsetup close cryptlvm
