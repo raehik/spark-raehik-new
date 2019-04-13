@@ -1,0 +1,21 @@
+---
+- name: Install OpenSSH
+  pacman: name=openssh state=present
+
+- name: Create SSH allowed users group
+  group:
+    name: "{{ ssh.allowed_group }}"
+    state: present
+
+- name: Push OpenSSH daemon configuration file
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+
+- name: Enable and start SSH daemon
+  service: name=sshd enabled=yes state=started
+  when: ssh.enable_sshd == True
+
+- name: Disable and stop SSH daemon
+  service: name=sshd enabled=no state=stopped
+  when: ssh.enable_sshd == False

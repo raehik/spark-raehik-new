@@ -5,7 +5,7 @@
     gid: "{{ user.uid }}"
     state: present
   tags:
-    - user
+  - user
 
 - name: Create user
   user:
@@ -16,4 +16,13 @@
     update_password: on_create
     uid: "{{ user.uid }}"
   tags:
-    - user
+  - user
+
+- name: Add user to SSH allowed users group
+  user:
+    name: "{{ user.name }}"
+    groups: "{{ ssh.allowed_group }}"
+    append: yes
+  tags:
+  - user
+  - ssh

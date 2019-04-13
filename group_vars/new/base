@@ -5,7 +5,6 @@ hostname: phy-nix-arch-lennyb
 packages:
   base:
   # system
-  - openssh
   - rsync
   - figlet
   - fortune-mod
@@ -104,7 +103,9 @@ user:
 
 ssh:
   port: 22
-  enable_sshd: False
+  enable_sshd: True
+  allowed_group: ssh-user
+
 gnupg:
   enable_agent: True
   emulate_ssh: True

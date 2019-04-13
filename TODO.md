@@ -9,3 +9,5 @@
     * slurp
     * xorg-server-xwayland
   * bootloader: only load intel-ucode if GenuineIntel
+  * `keychain` looks really cool https://www.funtoo.org/Keychain
+  * also `mosh`

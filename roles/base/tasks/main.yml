@@ -6,3 +6,4 @@
 - include: journal.yml
 - include: packages.yml
 - include: aur.yml
+- include: ssh.yml
