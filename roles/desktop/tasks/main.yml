@@ -1,0 +1,15 @@
+---
+- name: Install desktop packages
+  pacman:
+    name: "{{ packages.desktop }}"
+    state: present
+
+    #- name: Install desktop packages (AUR)
+    #  aur:
+    #    name: "{{ packages.desktop-aur }}"
+    #    state: present
+
+- name: Install fonts
+  pacman:
+    name: "{{ packages.fonts }}"
+    state: present

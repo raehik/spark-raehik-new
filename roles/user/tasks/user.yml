@@ -1,0 +1,19 @@
+---
+- name: Create user group
+  group:
+    name: "{{ user.name }}"
+    gid: "{{ user.uid }}"
+    state: present
+  tags:
+    - user
+
+- name: Create user
+  user:
+    name: "{{ user.name }}"
+    group: "{{ user.name }}"
+    password: "{{ user_password|password_hash('sha512') }}"
+    shell: "{{ user.shell }}"
+    update_password: on_create
+    uid: "{{ user.uid }}"
+  tags:
+    - user

@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+  - boot
+  - locale
+  - base
+  - user
+  - audio
+  - video
+  - desktop
+  vars_prompt:
+  - name: user_password
+    prompt: Enter desired user password

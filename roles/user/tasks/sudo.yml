@@ -1,0 +1,29 @@
+---
+- name: Install sudo
+  pacman: name=sudo state=present
+  tags:
+    - sudo
+
+- name: Create sudo group
+  group: name=sudo state=present
+  tags:
+    - sudo
+    - user
+
+- name: Add user to sudo group
+  user:
+    name: "{{ user.name }}"
+    groups: sudo
+    append: yes
+  tags:
+    - sudo
+    - user
+
+- name: Copy sudo configuration
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers
+    mode: 440
+    validate: visudo -cf %s
+  tags:
+    - sudo

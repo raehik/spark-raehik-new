@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+title {{ hostname }}
+linux /vmlinuz-linux
+{% if "GenuineIntel" in ansible_processor %}
+initrd /intel-ucode.img
+{% endif %}
+initrd /initramfs-linux.img
+options rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:{{ hostname }}:allow-discards

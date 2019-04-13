@@ -1,0 +1,8 @@
+---
+- name: Set the hostname
+  hostname: name={{ hostname }}
+  when: hostname is defined
+
+- include: journal.yml
+- include: packages.yml
+- include: aur.yml

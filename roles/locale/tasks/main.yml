@@ -1,0 +1,10 @@
+---
+- name: Generate locales
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ locale.present }}"
+- name: Set system locale
+  template:
+    src: locale.conf.j2
+    dest: /etc/locale.conf

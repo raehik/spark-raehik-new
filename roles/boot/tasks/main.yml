@@ -1,0 +1,34 @@
+---
+- name: Install Linux-hardened kernel
+  pacman: name=linux-hardened,linux-hardened-headers state=present
+
+- name: Install Intel microcode
+  pacman: name=intel-ucode state=present
+  when: "'GenuineIntel' in ansible_processor"
+
+- name: Install systemd-boot bootloader
+  command: bootctl --path=/boot install
+  tags:
+  - TODO
+
+- name: Install systemd-boot config
+  template:
+    src: loader.conf.j2
+    dest: /boot/loader/loader.conf
+
+- name: Install systemd-boot entry - Linux
+  template:
+    src: entries/entry.conf.j2
+    dest: /boot/loader/entries/{{ hostname }}.conf
+- name: Install systemd-boot entry - Linux fallback
+  template:
+    src: entries/entry-fallback.conf.j2
+    dest: /boot/loader/entries/{{ hostname }}-fallback.conf
+- name: Install systemd-boot entry - Linux hardened
+  template:
+    src: entries/entry-hardened.conf.j2
+    dest: /boot/loader/entries/{{ hostname }}-hardened.conf
+- name: Install systemd-boot entry - Linux hardened fallback
+  template:
+    src: entries/entry-hardened-fallback.conf.j2
+    dest: /boot/loader/entries/{{ hostname }}-hardened-fallback.conf

@@ -1,0 +1,10 @@
+---
+- name: Install CLI apps
+  pacman:
+    name: "{{ packages.apps.cli }}"
+    state: present
+
+- name: Install graphical apps
+  pacman:
+    name: "{{ packages.apps.graphical }}"
+    state: present
