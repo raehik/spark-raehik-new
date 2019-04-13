@@ -69,6 +69,7 @@ packages:
   - noto-fonts
   - noto-fonts-cjk
   - terminus-font
+  - noto-fonts-emoji
 
   desktop_aur:
   - ibus-mozc
