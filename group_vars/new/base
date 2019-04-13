@@ -1,5 +1,5 @@
 # vim: ft=yaml
-hostname: phy-nix-arch-lennyb
+hostname: lennyb-arch
 
 ## packages {{{
 packages:
