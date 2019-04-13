@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -e
+exit 1
+
+disk=/dev/sdb
+hostname=lennyb-arch
+
+part_efi_size=512M
+part_root_size=32G
+part_swap_size=8G
+
+base_pkgs="git tmux vim wpa_supplicant dialog ansible sudo python2"
+
+sgdisk $disk -og
+sgdisk $disk -n 1::+$part_efi_size -t 1:ef00 -c 1:${hostname}-efi
+sgdisk $disk -n 2::$(sgdisk -E $disk) -t 2:8300 -c 2:$hostname
+mkfs.fat -F 32 ${disk}1
+
+cryptsetup luksFormat --type luks2 ${disk}2
+cryptsetup open ${disk}2 cryptlvm
+
+pvcreate /dev/mapper/cryptlvm
+vgcreate $hostname /dev/mapper/cryptlvm
+lvcreate $hostname -n root -L $part_root_size
+lvcreate $hostname -n swap -L $part_swap_size
+lvcreate $hostname -n home -l 100%FREE
+
+mkfs /dev/$hostname/root
+mkfs /dev/$hostname/home -m 0
+mkswap /dev/$hostname/swap
+
+mount /dev/$hostname/root /mnt
+mkdir /mnt/boot
+mount ${disk}1 /mnt/boot
+swapon /dev/$hostname/swap
+mkdir /mnt/home
+mount /dev/$hostname/home /mnt/home
+
+pacstrap /mnt base $base_pkgs
+genfstab -t PARTLABEL /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+echo "HOOKS=(base udev keyboard autodetect filesystems fsck block modconf keymap encrypt lvm2 resume)" >> /etc/mkinitcpio.conf
+
+git clone https://github.com/raehik/spark-raehik-new
+cd spark-raehik-new
+./run
