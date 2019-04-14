@@ -1,0 +1,5 @@
+packages:
+  desktop:
+  - flashplugin
+  - chromium
+  - pepper-flash
