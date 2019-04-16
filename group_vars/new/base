@@ -66,6 +66,8 @@ packages:
   - firefox
   - sxiv
   - mpv
+  - zathura
+  - zathura-pdf-mupdf
 
   fonts:
   - noto-fonts
@@ -95,23 +97,22 @@ locale:
     - ja_JP.UTF-8
   console_keymap: uk
 
-localtime:
-  run_on: trusted
-
-hostsctl:
-  url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-
-user:
-  name: raehik
-  uid: 1100
-  shell: /usr/bin/zsh
+timezone: Europe/Berlin
 
 ssh:
   port: 22
   enable_sshd: True
   allowed_group: ssh-user
 
+user:
+  name: raehik
+  uid: 1100
+  shell: /usr/bin/zsh
+
 gnupg:
   enable_agent: True
   emulate_ssh: True
+
+hostsctl:
+  url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
 ## }}}

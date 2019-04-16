@@ -4,6 +4,7 @@
   roles:
   - boot
   - locale
+  - timezone
   - base
   - user
   - audio
