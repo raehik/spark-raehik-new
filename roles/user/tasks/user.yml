@@ -11,10 +11,11 @@
   user:
     name: "{{ user.name }}"
     group: "{{ user.name }}"
-    password: "{{ user_password|password_hash('sha512') }}"
-    shell: "{{ user.shell }}"
-    update_password: on_create
     uid: "{{ user.uid }}"
+    shell: "{{ user.shell }}"
+    #password: "{{ user_password|password_hash('sha512') }}"
+    password: ""
+    update_password: on_create
   tags:
   - user
 
