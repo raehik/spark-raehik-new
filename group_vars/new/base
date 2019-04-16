@@ -68,6 +68,8 @@ packages:
   - mpv
   - zathura
   - zathura-pdf-mupdf
+  - arc-gtk-theme
+  - nm-connection-editor
 
   fonts:
   - noto-fonts # base
