@@ -1,0 +1,15 @@
+---
+- name: Install NetworkManager
+  pacman:
+    name: networkmanager
+    state: present
+
+- name: Enable NetworkManager service
+  systemd:
+    name: NetworkManager
+    enabled: yes
+
+- name: Configure NetworkManager
+  template:
+    src: NetworkManager.conf.j2
+    dest: /etc/NetworkManager/NetworkManager.conf

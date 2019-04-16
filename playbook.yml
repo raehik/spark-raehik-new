@@ -6,6 +6,7 @@
   - locale
   - timezone
   - base
+  - network
   - user
   - audio
   - video
