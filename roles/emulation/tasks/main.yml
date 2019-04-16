@@ -1,0 +1,5 @@
+---
+- name: Install Dolphin dependencies
+  pacman:
+    name: miniupnpc
+    state: present

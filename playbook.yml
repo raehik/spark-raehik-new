@@ -12,6 +12,7 @@
   - video
   - desktop
   - steam
+  - emulation
 #  vars_prompt:
 #  - name: user_password
 #    prompt: Enter desired user password
