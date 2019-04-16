@@ -70,10 +70,11 @@ packages:
   - zathura-pdf-mupdf
 
   fonts:
-  - noto-fonts
-  - noto-fonts-cjk
-  - terminus-font
-  - noto-fonts-emoji
+  - noto-fonts # base
+  - ttf-dejavu # base
+  - noto-fonts-cjk # base CJK
+  - terminus-font # base
+  - noto-fonts-emoji # base emoji
 
   desktop_aur:
   - ibus-mozc
