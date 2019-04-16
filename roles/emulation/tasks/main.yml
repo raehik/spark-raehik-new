@@ -1,5 +1,5 @@
 ---
-- name: Install Dolphin dependencies
+- name: Install Dolphin
   pacman:
-    name: miniupnpc
+    name: dolphin,portaudio
     state: present
