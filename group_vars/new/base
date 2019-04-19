@@ -81,11 +81,11 @@ packages:
   desktop_aur:
   - ibus-mozc
 
-  apps:
-    cli:
-    - mpd
-    - ncmpcpp
-    - weechat
+#  apps:
+#    cli:
+#    - mpd
+#    - ncmpcpp
+#    - weechat
 ## }}}
 
 ## "defaults" (should be good for all) {{{

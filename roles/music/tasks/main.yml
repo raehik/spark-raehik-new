@@ -1,0 +1,5 @@
+---
+- name: Install music apps
+  pacman:
+    name: mpd,ncmpcpp
+    state: present
