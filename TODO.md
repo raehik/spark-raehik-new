@@ -4,6 +4,7 @@
   * network - networkmanager
   * k8s - kubectl,kops,aws-vault,terraform
   * music - mpdscribble
+  * desktop - ibus, ibus-mozc
 
 ## Packages
   * `keychain` looks really cool https://www.funtoo.org/Keychain

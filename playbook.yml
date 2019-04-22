@@ -8,11 +8,12 @@
   - base
   - network
   - user
-  - audio
-  - video
-  - music
-  - desktop
+  - pim
   - dev-ops
+  - audio
+  - music
+  - video
+  - desktop
   - steam
   - emulation
 #  vars_prompt:
