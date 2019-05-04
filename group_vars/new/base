@@ -66,6 +66,7 @@ packages:
   - firefox
   - flashplugin
   - chromium
+  - pepper-flash
   - sxiv
   - mpv
   - zathura
