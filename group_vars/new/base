@@ -1,5 +1,5 @@
 # vim: ft=yaml
-hostname: lennyb-arch-test
+hostname: fox-arch
 
 ## packages {{{
 packages:
@@ -64,6 +64,8 @@ packages:
   - pasystray
   - termite
   - firefox
+  - flashplugin
+  - chromium
   - sxiv
   - mpv
   - zathura
