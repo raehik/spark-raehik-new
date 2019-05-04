@@ -1,37 +1,38 @@
 #!/usr/bin/env bash
-disk=/dev/nvme0n1
 device_name=fox
-hostname=${device_name}-arch
+disk=/dev/nvme0n1
+disk_part_sep=p
 
 part_efi_size=512M
-part_root_size=40G
-swap_size=8G
+part_root_size=32G
+part_swap_size=8G
 base_pkgs="git tmux vim wpa_supplicant dialog ansible sudo python2"
 
 proj_dir=arch-sparker
+hostname=${device_name}-arch
 
-#sgdisk $disk -og
-#sgdisk $disk -n 1::+$part_efi_size -t 1:ef00 -c 1:${hostname}-efi
+sgdisk $disk -og
+sgdisk $disk -n 1::+$part_efi_size -t 1:ef00 -c 1:${hostname}-efi
 sgdisk $disk -n 2::+40G -t 2:0700 -c 2:${device_name}-win7
 sgdisk $disk -n 3::$(sgdisk -E $disk) -t 3:8300 -c 3:$hostname
-mkfs.fat -F 32 ${disk}p1
+mkfs.fat -F 32 ${disk}${disk_part_sep}1
 
-cryptsetup luksFormat --type luks2 ${disk}p3
-cryptsetup open ${disk}p3 cryptlvm2
+cryptsetup luksFormat --type luks2 ${disk}${disk_part_sep}3
+cryptsetup open ${disk}${disk_part_sep}3 cryptlvm
 
-pvcreate /dev/mapper/cryptlvm2
-vgcreate $hostname /dev/mapper/cryptlvm2
+pvcreate /dev/mapper/cryptlvm
+vgcreate $hostname /dev/mapper/cryptlvm
 lvcreate $hostname -n root -L $part_root_size
+lvcreate $hostname -n swap -L $part_swap_size
 lvcreate $hostname -n home -l 100%FREE
 
 mkfs.ext4 /dev/$hostname/root
 mkfs.ext4 /dev/$hostname/home -m 0
-fallocate -l $swap_size /swapfile
 mkswap /dev/$hostname/swap
 
 mount /dev/$hostname/root /mnt
 mkdir /mnt/boot
-mount ${disk}1 /mnt/boot
+mount ${disk}${disk_part_sep}1 /mnt/boot
 swapon /dev/$hostname/swap
 mkdir /mnt/home
 mount /dev/$hostname/home /mnt/home
@@ -48,4 +49,4 @@ umount /dev/$hostname/boot
 umount /dev/$hostname/root
 swapoff /dev/$hostname/swap
 vgchange -an $hostname
-cryptsetup close cryptlvm2
+cryptsetup close cryptlvm
