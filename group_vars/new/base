@@ -60,6 +60,7 @@ packages:
   - waybar
   - grim
   - slurp
+  - gtk-engine-murrine
   - pavucontrol
   - pasystray
   - termite
