@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+device_name=falco
+os_name=${device_name}-arch
+luks_mapping=cryptlvm_new
+lvm_vg=$os_name
+
+part_efi_size=512M
+part_root_size=64G
+part_swap_size=8G
+base_pkgs="git tmux vim wpa_supplicant dialog ansible sudo"
+
+disk=/dev/nvme0n1
+disk_part_sep=p
+
+proj_dir=arch-sparker
+
+# 0 for partnum makes sgdisk use the next available number. Using partnum 0 with
+# --typecode, --change-name after creating it with --new-partnum will use that
+# newly created partition.
+sgdisk $disk --zap-all --mbrtogpt
+sgdisk $disk --new-partnum=0::+$part_efi_size --typecode=0:ef00 --change-name=0:${os_name}-efi
+sgdisk $disk --largest-new=0 --typecode 0:8300 --change-name 0:$os_name
+mkfs.fat -F 32 ${disk}${disk_part_sep}1
+
+cryptsetup luksFormat --type luks2 ${disk}${disk_part_sep}3
+cryptsetup open ${disk}${disk_part_sep}3 $luks_mapping
+
+pvcreate /dev/mapper/$luks_mapping
+vgcreate $lvm_vg /dev/mapper/$luks_mapping
+lvcreate $lvm_vg -n root -L $part_root_size
+lvcreate $lvm_vg -n swap -L $part_swap_size
+lvcreate $lvm_vg -n home -l 100%FREE
+
+mkfs.ext4 /dev/$lvm_vg/root
+mkfs.ext4 /dev/$lvm_vg/home -m 0
+mkswap /dev/$lvm_vg/swap
+
+mount /dev/$lvm_vg/root /mnt
+mkdir /mnt/boot
+mount ${disk}${disk_part_sep}1 /mnt/boot
+swapon /dev/$lvm_vg/swap
+mkdir /mnt/home
+mount /dev/$lvm_vg/home /mnt/home
+
+pacstrap /mnt base $base_pkgs
+genfstab -t PARTLABEL /mnt >> /mnt/etc/fstab
+echo "HOOKS=(base udev keyboard autodetect filesystems fsck block modconf keymap encrypt lvm2 resume)" >> /mnt/etc/mkinitcpio.conf
+cp -r "$(pwd)"/.. /mnt/root/$proj_dir
+arch-chroot /mnt /root/$proj_dir/run
+arch-chroot /mnt mkinitcpio -p linux
+
+umount /dev/$lvm_vg/home
+umount /dev/$lvm_vg/boot
+umount /dev/$lvm_vg/root
+swapoff /dev/$lvm_vg/swap
+vgchange --activate n $lvm_vg
+cryptsetup close $luks_mapping

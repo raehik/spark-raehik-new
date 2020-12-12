@@ -1,5 +1,5 @@
 # vim: ft=yaml
-hostname: fox-arch
+hostname: falco-arch
 
 ## packages {{{
 packages:
@@ -39,8 +39,7 @@ packages:
 
   # etc.
   - light
-  - python2
-  - python3
+  - python
   - curl
   - htop
   - bc
@@ -100,11 +99,11 @@ locale:
   system: en_US.UTF-8
   present:
     - en_US.UTF-8
-    - en_GB.UTF-8
     - ja_JP.UTF-8
+    - en_GB.UTF-8
   console_keymap: uk
 
-timezone: Europe/Berlin
+timezone: Europe/London
 
 ssh:
   port: 22
