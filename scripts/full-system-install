@@ -5,7 +5,7 @@ hostname=lennyb-arch-test
 part_efi_size=512M
 part_root_size=32G
 part_swap_size=8G
-base_pkgs="git tmux vim wpa_supplicant dialog ansible sudo python2"
+base_pkgs="git tmux neovim ansible sudo python"
 
 proj_dir=arch-sparker
 

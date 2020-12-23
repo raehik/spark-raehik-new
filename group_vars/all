@@ -61,6 +61,14 @@ packages:
   - fortune-mod
   - cmatrix
 
+  tools:
+  - atool       # archive tool wrapper (does zips, tars, ...)
+
+  apps:
+  - mpd
+  - ncmpcpp
+  - weechat
+
   desktop:
   # video (drivers)
   - mesa
@@ -69,6 +77,7 @@ packages:
   - sway
   - swaylock
   - swayidle
+  - i3status-rust
   - py3status
   - ibus
   - xorg-server-xwayland
@@ -81,8 +90,9 @@ packages:
   - noto-fonts
   - ttf-dejavu
   - noto-fonts-cjk
-  - terminus-font
+  - ttf-hack
   - noto-fonts-emoji
+  - terminus-font
 
   # base apps
   - termite
@@ -98,15 +108,11 @@ packages:
 
   # extra
   - qt5-wayland     # otherwise Qt5 will use XWayland
-
-  desktop_aur:
-  - ibus-mozc
-
-  apps:
-  - mpd
-  - ncmpcpp
-  - weechat
 ## }}}
+
+  # TODO
+  games:
+  - steam
 
 ## general defaults {{{
 journal:

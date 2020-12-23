@@ -4,6 +4,11 @@
     name: "{{ packages.base }}"
     state: present
 
+- name: Install packages - tools
+  pacman:
+    name: "{{ packages.tools }}"
+    state: present
+
 - name: Install packages - apps
   pacman:
     name: "{{ packages.apps }}"

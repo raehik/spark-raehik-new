@@ -11,7 +11,7 @@ part_root_size=64G
 part_swap_size=8G
 
 # For installed system. Should be just the basics to troubleshoot and install further.
-base_pkgs="git tmux vim wpa_supplicant dialog ansible sudo"
+base_pkgs="git tmux neovim ansible sudo"
 
 # NVMe disks may have a character separating the disk from the partition, while sdX doesn't
 disk=/dev/sda
