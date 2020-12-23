@@ -17,8 +17,15 @@
   vars:
     cmdline: "rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:cryptlvm:allow-discards"
 
+- name: Check if systemd-boot bootloader is installed
+  command: bootctl is-installed
+  register: systemd_boot_installed
+  ignore_errors: true
+  changed_when: false
+
 - name: Install systemd-boot bootloader
   command: bootctl --path=/boot install
+  when: systemd_boot_installed is failed
 
 - name: Install systemd-boot config
   template:
