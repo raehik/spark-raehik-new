@@ -1,0 +1,13 @@
+---
+- name: Install light package (backlight control)
+  pacman:
+    name: light
+    state: present
+
+- name: Add user to video group (required for backlight control)
+  user:
+    name: "{{ user.name }}"
+    groups: video
+    append: yes
+  tags:
+  - user

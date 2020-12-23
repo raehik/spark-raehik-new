@@ -1,1 +1,124 @@
-new/base
+# vim: ft=yaml
+hostname: falco-arch
+
+## me defaults {{{
+timezone: Europe/London
+user:
+  name: raehik
+  uid: 1100
+  shell: /usr/bin/zsh
+locale:
+  system: en_US.UTF-8
+  present:
+    - en_US.UTF-8
+    - ja_JP.UTF-8
+    - en_GB.UTF-8
+  console_keymap: uk
+## me defaults }}}
+
+## packages {{{
+packages:
+  base:
+  # system
+  - openssh
+  - rsync
+  - man-db
+  - man-pages
+  - htop
+
+  # SSH: support common client terminals
+  - rxvt-unicode-terminfo
+  - termite-terminfo
+
+  # shells & completions
+  - zsh
+  - zsh-completions
+  - bash
+  - bash-completion
+
+  # super essential dev tools
+  - neovim
+  - git
+  - tmux
+  - ripgrep
+  - python
+  - curl
+
+  # low level disk & filesystem tools
+  - gptfdisk
+  - e2fsprogs
+  - dosfstools
+  - ntfs-3g
+
+  # archive, compression tools
+  - zip
+  - unzip
+  - unrar
+  - p7zip
+
+  # essential!!
+  - figlet
+  - fortune-mod
+  - cmatrix
+
+  desktop:
+  # video (drivers)
+  - mesa
+
+  # base (window manager)
+  - sway
+  - swaylock
+  - swayidle
+  - py3status
+  - ibus
+  - xorg-server-xwayland
+  - grim
+  - slurp
+  - gtk-engine-murrine
+  - arc-gtk-theme
+
+  # fonts
+  - noto-fonts
+  - ttf-dejavu
+  - noto-fonts-cjk
+  - terminus-font
+  - noto-fonts-emoji
+
+  # base apps
+  - termite
+  - pavucontrol
+  - nm-connection-editor
+  - firefox
+  - mpv
+  - sxiv
+  - zathura
+  - zathura-pdf-mupdf
+  - transmission-gtk
+  - chromium
+
+  # extra
+  - qt5-wayland     # otherwise Qt5 will use XWayland
+
+  desktop_aur:
+  - ibus-mozc
+
+  apps:
+  - mpd
+  - ncmpcpp
+  - weechat
+## }}}
+
+## general defaults {{{
+journal:
+  max_size: 500M
+
+ssh:
+  port: 22
+  enable_sshd: True
+  allowed_group: ssh-user
+
+sudo_group: sudo
+
+hostsctl:
+  url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+## }}}

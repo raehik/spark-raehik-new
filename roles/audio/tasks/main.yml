@@ -1,10 +1,12 @@
 ---
 - name: Install PulseAudio
   pacman:
-    name: pulseaudio,pulseaudio-alsa,alsa-utils
+    name: pulseaudio,pulseaudio-alsa
     state: present
 
+# e.g. nice "mute on unplug" behaviour
 - name: Switch output to newly connected devices
-  lineinfile: dest=/etc/pulse/default.pa
-              state=present
-              line="load-module module-switch-on-connect"
+  lineinfile:
+    dest: /etc/pulse/default.pa
+    line: "load-module module-switch-on-connect"
+    state: present

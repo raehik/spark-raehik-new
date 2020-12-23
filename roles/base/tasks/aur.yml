@@ -1,6 +1,0 @@
----
-- name: Use all cores when compressing packages
-  lineinfile:
-    dest: /etc/makepkg.conf
-    regexp: "^COMPRESSXZ"
-    line: "COMPRESSXZ=(xz -c -z - --threads=0)"

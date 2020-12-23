@@ -1,5 +1,0 @@
----
-- name: Install Dolphin
-  pacman:
-    name: dolphin,portaudio,miniupnpc,hidapi,soundtouch,sfml,mbedtls
-    state: present

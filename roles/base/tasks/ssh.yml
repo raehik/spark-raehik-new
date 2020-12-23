@@ -7,6 +7,12 @@
     name: "{{ ssh.allowed_group }}"
     state: present
 
+- name: Add user to SSH allowed users group
+  user:
+    name: "{{ user.name }}"
+    groups: "{{ ssh.allowed_group }}"
+    append: yes
+
 - name: Push OpenSSH daemon configuration file
   template:
     src: sshd_config.j2

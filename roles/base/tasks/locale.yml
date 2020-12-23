@@ -4,12 +4,17 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ locale.present }}"
+
 - name: Set system locale
   template:
     src: locale.conf.j2
     dest: /etc/locale.conf
+  vars:
+    system_locale: "{{ locale.system }}"
 
 - name: Set console keymap
   template:
     src: vconsole.conf.j2
     dest: /etc/vconsole.conf
+  vars:
+    console_keymap: "{{ locale.console_keymap }}"

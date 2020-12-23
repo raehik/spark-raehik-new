@@ -2,20 +2,13 @@
 - hosts: localhost
   become: yes
   roles:
-  - boot
-  - locale
-  - timezone
-  - base
-  - network
-  - user
-  - pim
-  - dev-ops
-  - audio
-  - music
-  - video
-  - desktop
-  - steam
-  - emulation
-#  vars_prompt:
-#  - name: user_password
-#    prompt: Enter desired user password
+  - role: base
+    tags: base
+  - role: boot
+    tags: boot
+  - role: audio
+    tags: audio
+  - role: backlight
+    tags: backlight
+  - role: apps
+    tags: apps

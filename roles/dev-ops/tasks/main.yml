@@ -1,5 +1,0 @@
----
-- name: Install assorted network utils
-  pacman:
-    name: bind-tools
-    state: present

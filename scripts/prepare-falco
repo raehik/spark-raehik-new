@@ -1,43 +1,53 @@
 #!/usr/bin/env bash
+set -e
+
 device_name=falco
 os_name=${device_name}-arch
-luks_mapping=cryptlvm_new
+luks_mapping=cryptlvm
 lvm_vg=$os_name
 
 part_efi_size=512M
 part_root_size=64G
 part_swap_size=8G
+
+# For installed system. Should be just the basics to troubleshoot and install further.
 base_pkgs="git tmux vim wpa_supplicant dialog ansible sudo"
 
-disk=/dev/nvme0n1
-disk_part_sep=p
+# NVMe disks may have a character separating the disk from the partition, while sdX doesn't
+disk=/dev/sda
+disk_part_sep=
 
 proj_dir=arch-sparker
 
-# 0 for partnum makes sgdisk use the next available number. Using partnum 0 with
-# --typecode, --change-name after creating it with --new-partnum will use that
-# newly created partition.
-sgdisk $disk --zap-all --mbrtogpt
-sgdisk $disk --new-partnum=0::+$part_efi_size --typecode=0:ef00 --change-name=0:${os_name}-efi
-sgdisk $disk --largest-new=0 --typecode 0:8300 --change-name 0:$os_name
-mkfs.fat -F 32 ${disk}${disk_part_sep}1
+# 0 for partnum *should* choose the next available partnum and further uses refer to it, but
+# it appears buggy and weird (--largest-new seems not to work at least). So be careful with
+# your partnums here.
+#sgdisk $disk --zap-all --mbrtogpt
+#sgdisk $disk --new=1::+$part_efi_size --typecode=1:ef00 --change-name=1:${device_name}-efi
+#sgdisk $disk --largest-new=2          --typecode=2:8300 --change-name=2:$os_name
 
-cryptsetup luksFormat --type luks2 ${disk}${disk_part_sep}3
-cryptsetup open ${disk}${disk_part_sep}3 $luks_mapping
+# TODO
+#echo "Sleeping for a bit to wait for system to update /dev/disk entries..."
+#sleep 2
 
-pvcreate /dev/mapper/$luks_mapping
-vgcreate $lvm_vg /dev/mapper/$luks_mapping
-lvcreate $lvm_vg -n root -L $part_root_size
-lvcreate $lvm_vg -n swap -L $part_swap_size
-lvcreate $lvm_vg -n home -l 100%FREE
+#mkfs.fat -F 32 /dev/disk/by-partlabel/${device_name}-efi
 
-mkfs.ext4 /dev/$lvm_vg/root
+#cryptsetup luksFormat --type luks2 /dev/disk/by-partlabel/$os_name
+#cryptsetup open /dev/disk/by-partlabel/$os_name $luks_mapping
+
+#pvcreate /dev/mapper/$luks_mapping
+#vgcreate $lvm_vg /dev/mapper/$luks_mapping
+#lvcreate $lvm_vg -n root -L $part_root_size
+#lvcreate $lvm_vg -n swap -L $part_swap_size
+#lvcreate $lvm_vg -n home -l 100%FREE
+
+#mkfs.ext4 /dev/$lvm_vg/root
 mkfs.ext4 /dev/$lvm_vg/home -m 0
 mkswap /dev/$lvm_vg/swap
 
 mount /dev/$lvm_vg/root /mnt
 mkdir /mnt/boot
-mount ${disk}${disk_part_sep}1 /mnt/boot
+mount /dev/disk/by-partlabel/${device_name}-efi /mnt/boot
 swapon /dev/$lvm_vg/swap
 mkdir /mnt/home
 mount /dev/$lvm_vg/home /mnt/home
@@ -47,10 +57,10 @@ genfstab -t PARTLABEL /mnt >> /mnt/etc/fstab
 echo "HOOKS=(base udev keyboard autodetect filesystems fsck block modconf keymap encrypt lvm2 resume)" >> /mnt/etc/mkinitcpio.conf
 cp -r "$(pwd)"/.. /mnt/root/$proj_dir
 arch-chroot /mnt /root/$proj_dir/run
-arch-chroot /mnt mkinitcpio -p linux
+arch-chroot /mnt mkinitcpio --allpresets
 
 umount /dev/$lvm_vg/home
-umount /dev/$lvm_vg/boot
+umount /dev/disk/by-partlabel/${device_name}-efi
 umount /dev/$lvm_vg/root
 swapoff /dev/$lvm_vg/swap
 vgchange --activate n $lvm_vg

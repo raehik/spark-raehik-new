@@ -1,8 +1,5 @@
 ## Roles
-  * steam - `mkdir ~/media/games && ln -s ~/.local/share/Steam
-    ~/media/games/steam`
-  * network - networkmanager
-  * k8s - kubectl,kops,aws-vault,terraform
+  * aur (yay)
   * music - mpdscribble
   * desktop - ibus, ibus-mozc
 

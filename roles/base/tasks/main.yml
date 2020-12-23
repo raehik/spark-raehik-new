@@ -1,9 +1,17 @@
 ---
-- name: Set the hostname
-  hostname: name={{ hostname }}
-  when: hostname is defined
+# hostname, timezone
+# note that we also do some pacman stuff here (which we then DON'T do in
+# package.yml), since it appears we need a package to use Ansible's hostname
+# setter
+- include: early.yml
 
 - include: journal.yml
 - include: packages.yml
-- include: aur.yml
+
+- include: user.yml
+
 - include: ssh.yml
+- include: network.yml
+- include: locale.yml
+
+- include: sudo.yml

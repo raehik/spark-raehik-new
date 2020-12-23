@@ -1,5 +1,0 @@
----
-- name: Install video packages
-  pacman:
-    name: "{{ packages.video }}"
-    state: present

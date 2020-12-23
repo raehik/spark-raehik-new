@@ -1,10 +1,15 @@
 ---
-- name: Install CLI apps
+- name: Install packages - base
   pacman:
-    name: "{{ packages.apps.cli }}"
+    name: "{{ packages.base }}"
     state: present
 
-- name: Install graphical apps
+- name: Install packages - apps
   pacman:
-    name: "{{ packages.apps.graphical }}"
+    name: "{{ packages.apps }}"
+    state: present
+
+- name: Install packages - desktop
+  pacman:
+    name: "{{ packages.desktop }}"
     state: present

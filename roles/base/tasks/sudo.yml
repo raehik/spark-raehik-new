@@ -2,22 +2,12 @@
 - name: Install sudo
   pacman: name=sudo state=present
   tags:
-    - sudo
+  - sudo
 
 - name: Create sudo group
   group: name=sudo state=present
   tags:
-    - sudo
-    - user
-
-- name: Add user to sudo group
-  user:
-    name: "{{ user.name }}"
-    groups: sudo
-    append: yes
-  tags:
-    - sudo
-    - user
+  - sudo
 
 - name: Copy sudo configuration
   template:
@@ -26,4 +16,13 @@
     mode: 440
     validate: visudo -cf %s
   tags:
-    - sudo
+  - sudo
+
+- name: Add user to sudo group
+  user:
+    name: "{{ user.name }}"
+    groups: "{{ sudo_group }}"
+    append: yes
+  tags:
+  - sudo
+  - user
