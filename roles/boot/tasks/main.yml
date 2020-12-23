@@ -5,6 +5,18 @@
 - name: Install AMD microcode
   pacman: name=amd-ucode state=present
 
+- name: Install boot tools
+  pacman:
+    name: efitools, sbsigntools, efibootmgr, tpm2-tools
+    state: present
+
+- name: Add sbupdate config file
+  template:
+    src: sbupdate.conf.j2
+    dest: /etc/sbupdate.conf
+  vars:
+    cmdline: "rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:cryptlvm:allow-discards"
+
 - name: Install systemd-boot bootloader
   command: bootctl --path=/boot install
 
