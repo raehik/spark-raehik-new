@@ -20,6 +20,12 @@ And that should put it at the top too, so you should boot straight into it now.
 Re-generating the UEFI binary when Linux is updated should be managed for you by
 the installed pacman hooks.
 
+### AUR packages
+  * desktop: ttf-font-awesome-4
+  * desktop: all Mozc stuff
+  * desktop: tmuxinator
+  * base: sbupdate
+
 ## Notes
   * swap must be placed on a partition in order to be used for hibernation -
     there are workarounds, but it's maybe better to use a partition
