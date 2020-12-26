@@ -82,3 +82,13 @@ start cups` when trying to access configure it.
   * **Epson XP-312:**  `epson-inkjet-printer-escpr` (AUR)
 
 Make sure to set the paper type if you're not American.
+
+### MPD in i3status-rs
+It's not as great as py3status or my own solutions. I had to install mpDris2:
+
+    yay -S mpdris2
+
+And I can't set volume, and the set width thing doesn't work with non-halfwidth
+characters. But it does appear to work with Firefox/YouTube due to it exporting
+a MPRIS interface or something, so that's a small win. It's good enough, so I'm
+using it for now.
