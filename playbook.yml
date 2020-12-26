@@ -12,3 +12,5 @@
     tags: backlight
   - role: apps
     tags: apps
+  - role: gc-controller
+    tags: gc-controller

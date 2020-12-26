@@ -1,3 +1,15 @@
+## Ansible notes
+  * All roles inherently depend on `base`.
+  * I treat templates more like functions, I like to use local vars and pass in
+    their values. Makes me feel more at ease.
+
+## Notes
+  * swap must be placed on a partition in order to be used for hibernation -
+    there are workarounds, but it's maybe better to use a partition
+    * https://www.kernel.org/doc/Documentation/power/swsusp-and-swap-files.txt
+    * https://unix.stackexchange.com/questions/434177/why-a-file-as-swap-cant-be-used-for-hibernation-in-linux
+    * https://askubuntu.com/questions/6769/hibernate-and-resume-from-a-swap-file/
+
 ## Post notes
 ### Secure Boot
 The `boot` role prepares config for `sbupdate`, an AUR tool for generating UEFI
@@ -26,14 +38,47 @@ the installed pacman hooks.
   * desktop: tmuxinator
   * base: sbupdate
 
-## Notes
-  * swap must be placed on a partition in order to be used for hibernation -
-    there are workarounds, but it's maybe better to use a partition
-    * https://www.kernel.org/doc/Documentation/power/swsusp-and-swap-files.txt
-    * https://unix.stackexchange.com/questions/434177/why-a-file-as-swap-cant-be-used-for-hibernation-in-linux
-    * https://askubuntu.com/questions/6769/hibernate-and-resume-from-a-swap-file/
+## Guides
+For things that I can't or haven't yet automated with Ansible.
 
-## Ansible notes
-  * All roles inherently depend on `base`.
-  * I treat templates more like functions, I like to use local vars and pass in
-    their values. Makes me feel more at ease.
+### RTL8821CE wireless radio
+As of 2020-12-23, the RTL8821CE radio for my HP Pavilion 15-cw1104ng still isn't
+in the Linux kernel. Luckily, it's easy to solve:
+
+    yay -S rtl8821ce-dkms-git
+
+This installs the necessary dependencies too. It'll take ages to build the first
+time. But that's all you need. No rebuilding initramfs either.
+
+### Japanese IME in Wayland
+I use Sway (Wayland). Mozc is the only decent Linux Japanese IME out there. IMEs
+in Wayland have never been any good. Here are my ad-hoc notes for getting Mozc
+working in Sway.
+
+  * I use IBus+Mozc. The other input methods seem kinda specific and/or shit.
+  * Install via `yay -S ibus-mozc`. *(Note: See below for Emacs notes.)*
+  * You need to add Mozc to IBus's input method list manually for some reason.
+    With IBus running, run `/usr/lib/ibus-mozc/ibus-engine-mozc`, then run
+    `ibus-setup` and add Mozc in the Input Method tab. Now you can terminate
+    `ibus-engine-mozc`, and my IME cycle script should work.
+  * To fix the weird breaking input bug I had from like Aug to Dec 2020, you
+    gotta call `ibus-daemon` with `DISPLAY=`! So I suggest `DISPLAY= ibus-daemon
+    --replace`. まだ入力とかは不器用なままだけどとりあえずやったぁー！
+  * I recommend `emacs-mozc` (AUR) for Emacs users. `yay -S emacs-mozc`
+    * Ugh: `emacs-mozc` is broken on AUR. I had to download the AUR snapshot,
+      uncomment the "build emacs-mozc" line, and `makepkg` manually. I provide a
+      patch in `etc/`, just download the snapshot from the AUR page: https://aur.archlinux.org/packages/emacs-mozc/ or direct may work: https://aur.archlinux.org/cgit/aur.git/snapshot/mozc.tar.gz
+
+### Printing
+Printing is generally awful, so I don't want to attempt to fake it via Ansible.
+Instead, here are my solutions for printers I've used.
+
+Install `cups` and `ghostscript` (appears pretty much required, but not an
+enforced dependency) to start off. `systemctl enable cups.socket` will start
+CUPS when a program attempts to use it -- handy. You'll still need `systemctl
+start cups` when trying to access configure it.
+
+  * **Epson WF-5110:** `epson-inkjet-printer-escpr` (AUR)
+  * **Epson XP-312:**  `epson-inkjet-printer-escpr` (AUR)
+
+Make sure to set the paper type if you're not American.

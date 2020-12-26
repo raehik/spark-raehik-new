@@ -1,0 +1,7 @@
+---
+- name: Install udev rule for using GameCube controllers as non-root
+  copy:
+    src: 51-gcadapter.rules
+    dest: /etc/udev/rules.d/51-gcadapter.rules
+  notify:
+  - reload udev rules

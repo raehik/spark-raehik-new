@@ -13,9 +13,9 @@
     group: "{{ user.name }}"
     uid: "{{ user.uid }}"
     shell: "{{ user.shell }}"
-    # TODO: remove when known safe
-    #password: ""
-    #update_password: on_create
+    # create with empty password -> first login is easy and obvious
+    password: ""
+    update_password: on_create
   tags:
   - user
 

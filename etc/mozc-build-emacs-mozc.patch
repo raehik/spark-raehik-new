@@ -1,0 +1,11 @@
+--- PKGBUILD	2020-12-24 19:00:46.056776712 +0000
++++ PKGBUILD-with-emacs-mozc	2020-12-24 19:02:27.380115512 +0000
+@@ -1,7 +1,7 @@
+ # Maintainer: ponsfoot <cabezon dot hashimoto at gmail dot com>
+ 
+ ## If you will be using mozc.el on Emacs, uncomment below.
+-#_emacs_mozc="yes"
++_emacs_mozc="yes"
+ 
+ ## If you will not be using ibus (only use uim), comment out below.
+ _ibus_mozc="yes"

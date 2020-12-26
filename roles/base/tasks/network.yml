@@ -13,10 +13,3 @@
   template:
     src: NetworkManager.conf.j2
     dest: /etc/NetworkManager/NetworkManager.conf
-
-- name: Set timezone
-  file:
-    src: /usr/share/zoneinfo/{{ timezone }}
-    dest: /etc/localtime
-    state: link
-

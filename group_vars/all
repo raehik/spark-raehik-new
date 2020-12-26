@@ -85,6 +85,8 @@ packages:
   - slurp
   - gtk-engine-murrine
   - arc-gtk-theme
+  - gammastep
+  - mako
 
   # fonts
   - noto-fonts
@@ -108,6 +110,7 @@ packages:
 
   # extra
   - qt5-wayland     # otherwise Qt5 will use XWayland
+  - udisks2         # imperative for easy mounting
 ## }}}
 
   # TODO

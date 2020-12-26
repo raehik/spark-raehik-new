@@ -2,6 +2,11 @@
 - name: Install Linux
   pacman: name=linux,linux-firmware state=present
 
+- name: Install LVM
+  pacman:
+    name: lvm2
+    state: present
+
 - name: Install AMD microcode
   pacman: name=amd-ucode state=present
 
