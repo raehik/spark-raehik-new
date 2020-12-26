@@ -83,7 +83,8 @@ start cups` when trying to access configure it.
 
 Make sure to set the paper type if you're not American.
 
-### MPD in i3status-rs
+### i3status-rs
+#### MPD
 It's not as great as py3status or my own solutions. I had to install mpDris2:
 
     yay -S mpdris2
@@ -92,3 +93,8 @@ And I can't set volume, and the set width thing doesn't work with non-halfwidth
 characters. But it does appear to work with Firefox/YouTube due to it exporting
 a MPRIS interface or something, so that's a small win. It's good enough, so I'm
 using it for now.
+
+#### watson
+Seems cools, trying it out. Easy install via user `pip`:
+
+    pip install td-watson
