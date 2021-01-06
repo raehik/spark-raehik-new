@@ -83,6 +83,12 @@ start cups` when trying to access configure it.
 
 Make sure to set the paper type if you're not American.
 
+### Docker
+Big pain. Just the `docker` package seems enough. Arch Wiki tells you to add
+yourself to the `docker` group for non-root access, but then goes on to say that
+it's root-equivalent, so I don't love the idea. For now, I'm seeing how far I
+can get with just `sudo docker`.
+
 ### i3status-rs
 #### MPD
 It's not as great as py3status or my own solutions. I had to install mpDris2:
