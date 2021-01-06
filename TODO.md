@@ -13,3 +13,8 @@
   * aur (yay)
   * music - mpdscribble
   * desktop - ibus, ibus-mozc
+
+### base
+  * network/chrony: more config (all in Arch Wiki, also see pigmonkey/spark)
+    * only attempt sync when online
+    * non-default `/etc/chrony.conf` (though default is fine tbh)

@@ -13,3 +13,13 @@
   template:
     src: NetworkManager.conf.j2
     dest: /etc/NetworkManager/NetworkManager.conf
+
+- name: Install chrony (NTPD)
+  pacman:
+    name: chrony
+    state: present
+
+- name: Enable chrony service
+  systemd:
+    name: chronyd
+    enabled: yes
