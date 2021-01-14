@@ -50,25 +50,6 @@ in the Linux kernel. Luckily, it's easy to solve:
 This installs the necessary dependencies too. It'll take ages to build the first
 time. But that's all you need. No rebuilding initramfs either.
 
-### Japanese IME in Wayland
-I use Sway (Wayland). Mozc is the only decent Linux Japanese IME out there. IMEs
-in Wayland have never been any good. Here are my ad-hoc notes for getting Mozc
-working in Sway.
-
-  * I use IBus+Mozc. The other input methods seem kinda specific and/or shit.
-  * Install via `yay -S ibus-mozc`. *(Note: See below for Emacs notes.)*
-  * You need to add Mozc to IBus's input method list manually for some reason.
-    With IBus running, run `/usr/lib/ibus-mozc/ibus-engine-mozc`, then run
-    `ibus-setup` and add Mozc in the Input Method tab. Now you can terminate
-    `ibus-engine-mozc`, and my IME cycle script should work.
-  * To fix the weird breaking input bug I had from like Aug to Dec 2020, you
-    gotta call `ibus-daemon` with `DISPLAY=`! So I suggest `DISPLAY= ibus-daemon
-    --replace`. まだ入力とかは不器用なままだけどとりあえずやったぁー！
-  * I recommend `emacs-mozc` (AUR) for Emacs users. `yay -S emacs-mozc`
-    * Ugh: `emacs-mozc` is broken on AUR. I had to download the AUR snapshot,
-      uncomment the "build emacs-mozc" line, and `makepkg` manually. I provide a
-      patch in `etc/`, just download the snapshot from the AUR page: https://aur.archlinux.org/packages/emacs-mozc/ or direct may work: https://aur.archlinux.org/cgit/aur.git/snapshot/mozc.tar.gz
-
 ### Printing
 Printing is generally awful, so I don't want to attempt to fake it via Ansible.
 Instead, here are my solutions for printers I've used.
@@ -88,6 +69,17 @@ Big pain. Just the `docker` package seems enough. Arch Wiki tells you to add
 yourself to the `docker` group for non-root access, but then goes on to say that
 it's root-equivalent, so I don't love the idea. For now, I'm seeing how far I
 can get with just `sudo docker`.
+
+### Video drivers
+AMD has 3 Vulkan drivers:
+
+  * `vulkan-radeon`: RADV (Mesa project)
+  * `amdvlk`: AMDVLK Open (AMD)
+  * `vulkan-amdgpu-pro` (AUR): AMDVLK Closed (AMD)
+
+TODO: figure out what should use what. I know I needed to install
+`vulkan-radeon` to play Melee decently. Looks like RADV (`vulkan-radeon`) is
+usually best.
 
 ### i3status-rs
 #### MPD
