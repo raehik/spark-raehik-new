@@ -1,0 +1,23 @@
+---
+- name: Install podman
+  pacman:
+    name: podman,crun
+    state: present
+
+- name: Install /etc/subuid manually for rootless podman
+  template:
+    src: subxid.j2
+    dest: /etc/subuid
+  vars:
+    username: "{{ user.name }}"
+    start_id: 100000
+    id_amount: 65536
+
+- name: Install /etc/subgid manually for rootless podman
+  template:
+    src: subxid.j2
+    dest: /etc/subgid
+  vars:
+    username: "{{ user.name }}"
+    start_id: 100000
+    id_amount: 65536
