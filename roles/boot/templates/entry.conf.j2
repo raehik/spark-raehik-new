@@ -3,4 +3,4 @@ title {{ title }}
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd {{ initramfs }}
-options rw root=/dev/{{ lvm_vg }}/root resume=/dev/{{ lvm_vg }}/swap cryptdevice=PARTLABEL={{ luks_partition }}:cryptlvm:allow-discards
+options {{ cmdline }}

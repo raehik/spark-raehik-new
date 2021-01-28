@@ -15,12 +15,19 @@
     name: efitools, sbsigntools, efibootmgr, tpm2-tools
     state: present
 
+# cgroup param switches from cgroups v1 -> v2, which allows unprivileged users
+# to do some resource dividing
+# see: https://wiki.archlinux.org/index.php/Cgroups#As_unprivileged_user
+- name: Build kernel parameters and save as local variable
+  set_fact:
+    kernel_cmdline: "rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:cryptlvm:allow-discards systemd.unified_cgroup_hierarchy=1"
+
 - name: Add sbupdate config file
   template:
     src: sbupdate.conf.j2
     dest: /etc/sbupdate.conf
   vars:
-    cmdline: "rw root=/dev/{{ hostname }}/root resume=/dev/{{ hostname }}/swap cryptdevice=PARTLABEL={{ hostname }}:cryptlvm:allow-discards"
+    cmdline: "{{ kernel_cmdline }}"
 
 - name: Check if systemd-boot bootloader is installed
   command: bootctl is-installed
@@ -32,29 +39,27 @@
   command: bootctl --path=/boot install
   when: systemd_boot_installed is failed
 
-- name: Install systemd-boot config
-  template:
-    src: loader.conf.j2
-    dest: /boot/loader/loader.conf
-  vars:
-  - default_entry: "{{ hostname }}-mkinitcpio"
-
 - name: Install systemd-boot entry - mkinitcpio
   template:
     src: entry.conf.j2
     dest: /boot/loader/entries/{{ hostname }}-mkinitcpio.conf
   vars:
-  - lvm_vg: "{{ hostname }}"
-    luks_partition: "{{ hostname }}"
-    title: "{{ hostname }}-mkinitcpio"
+  - title: "{{ hostname }}-mkinitcpio"
     initramfs: /initramfs-linux.img
+    cmdline: "{{ kernel_cmdline }}"
 
 - name: Install systemd-boot entry - mkinitcpio fallback
   template:
     src: entry.conf.j2
     dest: /boot/loader/entries/{{ hostname }}-mkinitcpio-fallback.conf
   vars:
-  - lvm_vg: "{{ hostname }}"
-    luks_partition: "{{ hostname }}"
-    title: "{{ hostname }}-mkinitcpio-fallback"
+  - title: "{{ hostname }}-mkinitcpio-fallback"
     initramfs: /initramfs-linux-fallback.img
+    cmdline: "{{ kernel_cmdline }}"
+
+- name: Install systemd-boot config
+  template:
+    src: loader.conf.j2
+    dest: /boot/loader/loader.conf
+  vars:
+  - default_entry: "{{ hostname }}-mkinitcpio"
