@@ -12,6 +12,8 @@
     tags: backlight
   - role: apps
     tags: apps
+  - role: input-ja
+    tags: input-ja
   - role: gc-controller
     tags: gc-controller
   - role: containers

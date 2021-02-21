@@ -1,0 +1,5 @@
+---
+- name: Install SKK for IBus
+  pacman:
+    name: ibus-skk,skk-jisyo
+    state: present
