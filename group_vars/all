@@ -66,6 +66,7 @@ packages:
 
   apps:
   - mpd
+  - mpc
   - ncmpcpp
   - weechat
 
