@@ -11,7 +11,7 @@
 
 - name: Configure NetworkManager
   template:
-    src: NetworkManager.conf.j2
+    src: nm/NetworkManager.conf.j2
     dest: /etc/NetworkManager/NetworkManager.conf
 
 - name: Install chrony (NTPD)
@@ -23,3 +23,19 @@
   systemd:
     name: chronyd
     enabled: yes
+
+- name: Enable systemd-resolved service
+  systemd:
+    name: systemd-resolved
+    enabled: yes
+
+- name: Install systemd-resolved stub resolv.conf
+  file:
+    state: link
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+
+- name: Enable mDNS by default for NetworkManager connections
+  template:
+    src: nm/mdns-default-on.conf
+    dest: /etc/NetworkManager/conf.d/mdns-default-on.conf
