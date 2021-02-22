@@ -96,3 +96,7 @@ using it for now.
 Seems cools, trying it out. Easy install via user `pip`:
 
     pip install td-watson
+
+#### Printers, scanners
+`simple-scan` just works -- but maybe you need CUPS for it too, which I didn't
+want to require. I don't want to add it without proper testing.
