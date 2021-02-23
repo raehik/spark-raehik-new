@@ -82,12 +82,13 @@ packages:
   - py3status
   - ibus
   - xorg-server-xwayland
+  - wl-clipboard
   - grim
   - slurp
   - gtk-engine-murrine
   - arc-gtk-theme
-  - gammastep
   - mako
+  - gammastep
 
   # fonts
   - noto-fonts
