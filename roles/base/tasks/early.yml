@@ -5,8 +5,10 @@
     dest: /etc/localtime
     state: link
 
-- name: Copy pacman configuration file
-  copy: src=pacman.conf dest=/etc/pacman.conf
+- name: Configure pacman
+  template:
+    src: pacman.conf.j2
+    dest: /etc/pacman.conf
 
 - name: Refresh pacman package databases
   pacman:
