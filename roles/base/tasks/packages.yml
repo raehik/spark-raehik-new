@@ -14,7 +14,7 @@
   file: path=/etc/pacman.d/hooks
         state=directory
   tags:
-    - packages
+  - packages
 
 - name: Install pacman extras (for paccache)
   pacman:
@@ -32,5 +32,5 @@
   - reload systemd config
   - restart paccache
 
-- name: Enable and start pacman cache cleanup timer
-  service: name=paccache.timer enabled=yes state=started
+- name: Enable pacman cache cleanup timer
+  service: name=paccache.timer enabled=yes

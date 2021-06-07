@@ -2,7 +2,7 @@
 - name: Create journal config directory
   file: path=/etc/systemd/journald.conf.d state=directory
   tags:
-    - journal
+  - journal
 
 - name: Push journal max size config
   template:
@@ -12,4 +12,4 @@
   vars:
     journal_max_size: "{{ journal.max_size }}"
   tags:
-    - journal
+  - journal
